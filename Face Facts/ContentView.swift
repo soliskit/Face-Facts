@@ -24,7 +24,10 @@ struct ContentView: View {
             }
             .navigationTitle("Face Facts")
             .navigationDestination(for: Person.self) { person in
-                Text(person.name)
+                EditPersonView(person: person)
+            }
+            .toolbar {
+                Button("Add Person", systemImage: "plus", action: addPerson)
             }
         }
     }
@@ -32,6 +35,7 @@ struct ContentView: View {
     func addPerson() {
         let person = Person(name: "", emailAddress: "", details: "")
         modelContext.insert(person)
+        path.append(person)
     }
 }
 
