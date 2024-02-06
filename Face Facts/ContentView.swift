@@ -28,6 +28,11 @@ struct ContentView: View {
             }
         }
     }
+    
+    func addPerson() {
+        let person = Person(name: "", emailAddress: "", details: "")
+        modelContext.insert(person)
+    }
 }
 
 #Preview {
