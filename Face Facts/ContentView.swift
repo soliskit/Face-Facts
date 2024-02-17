@@ -11,25 +11,17 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var path = [Person]()
-    @Query var people: [Person]
     
     var body: some View {
         NavigationStack(path: $path) {
-            List {
-                ForEach(people) { person in
-                    NavigationLink(value: person) {
-                        Text(person.name)
-                    }
+            PeopleView()
+                .navigationTitle("Face Facts")
+                .navigationDestination(for: Person.self) { person in
+                    EditPersonView(person: person)
                 }
-                .onDelete(perform: deletePeople)
-            }
-            .navigationTitle("Face Facts")
-            .navigationDestination(for: Person.self) { person in
-                EditPersonView(person: person)
-            }
-            .toolbar {
-                Button("Add Person", systemImage: "plus", action: addPerson)
-            }
+                .toolbar {
+                    Button("Add Person", systemImage: "plus", action: addPerson)
+                }
         }
     }
     
@@ -37,13 +29,6 @@ struct ContentView: View {
         let person = Person(name: "", emailAddress: "", details: "")
         modelContext.insert(person)
         path.append(person)
-    }
-    
-    func deletePeople(at offsets: IndexSet) {
-        for offset in offsets {
-            let person = people[offset]
-            modelContext.delete(person)
-        }
     }
 }
 
