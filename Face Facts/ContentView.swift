@@ -11,6 +11,7 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var path = [Person]()
+    @State private var searchText = ""
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -22,6 +23,7 @@ struct ContentView: View {
                 .toolbar {
                     Button("Add Person", systemImage: "plus", action: addPerson)
                 }
+                .searchable(text: $searchText)
         }
     }
     
