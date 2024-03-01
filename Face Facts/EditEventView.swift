@@ -20,6 +20,11 @@ struct EditEventView: View {
     }
 }
 
-//#Preview {
-//    EditEventView()
-//}
+#Preview {
+    do {
+        let previewer = try Previewer()
+        return EditEventView(event: previewer.event)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
+}
